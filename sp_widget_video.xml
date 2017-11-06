@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2017-11-06 22:00:48">
+<sp_widget action="INSERT_OR_UPDATE">
+<client_script><![CDATA[function() {
+  /* widget controller */
+  var c = this;
+}]]></client_script>
+<controller_as>c</controller_as>
+<css/>
+<data_table>sp_instance</data_table>
+<demo_data/>
+<description/>
+<docs display_value=""/>
+<field_list/>
+<has_preview>false</has_preview>
+<id>single-video</id>
+<internal>false</internal>
+<link/>
+<name>Single Video</name>
+<option_schema>[
+{"displayValue":"Source URL of Video","name":"source","label":"Source URL of Video","type":"string","value":"source"},
+{"displayValue":"Type of Video (e.g. video/mp4)","name":"type","label":"Type of Video (e.g. video/mp4)","type":"string","value":"type"},
+{"displayValue":"Query for db_video Table (Top result will be used)","name":"query","label":"Query for db_video Table (Top result will be used)","type":"string","value":"query"}
+]</option_schema>
+<public>false</public>
+<roles/>
+<script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+  if(options.query){
+	  var response = Data.get({"tableName": "db_video", "query": options.query, "recordsPerPage": 1, "page": 1});
+	  var video = response.result[0];
+	  data.source = video.name;
+  }
+  else{
+	  data.source = options.source;
+  }
+})();]]></script>
+<servicenow>false</servicenow>
+<sys_class_name>sp_widget</sys_class_name>
+<sys_created_by>Arthur.Cheung</sys_created_by>
+<sys_created_on>2017-10-23 05:31:12</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>a8e338604fce4f4009e01d801310c790</sys_id>
+<sys_mod_count>9</sys_mod_count>
+<sys_name>Single Video</sys_name>
+<sys_package display_value="Global" source="global">global</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sp_widget_a8e338604fce4f4009e01d801310c790</sys_update_name>
+<sys_updated_by>Arthur.Cheung</sys_updated_by>
+<sys_updated_on>2017-10-25 22:56:40</sys_updated_on>
+<template><![CDATA[<div>
+<video controls="controls" width="100%">
+  <source src="{{::c.data.source}}" type="{{::options.type}}" />
+</video>
+</div>]]></template>
+</sp_widget>
+</unload>
